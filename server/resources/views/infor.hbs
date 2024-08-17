@@ -1,0 +1,140 @@
+
+<div class="container">
+    <div class="row"> 
+        <div class="col-12">
+            <div id="maincontent" style="background-color: rgb(229, 231, 235); padding : 10px">
+                <div class="row">
+                <div class="col-md-3 col-12" style="display: flex; align-items: center; justify-content: center;">
+                <div class="card" style="border-radius: .5rem; overflow: hidden; box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.5); border: none;">
+                    {{#with img}}
+                        <img src="{{this}}" alt="" style="min-width: 250px;">
+                    {{/with}}
+                </div>
+            </div>
+            <div class="col-md-9 col-12" style="display: flex;
+            align-items: center;
+            flex-direction: column;
+            ">
+                {{#with name}}
+                    <h3 class="roboto-bold" style="padding: 10px; text-align: center">{{plainText this}}</h3>
+                {{/with}}
+                    <ul style="list-style: none; padding : 10px">
+                    <li style="display: flex; align-items: center;" class="roboto-regular">
+                        {{#with updateAt}}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:; margin-right: 5px"><path d="M12.25 2c-5.514 0-10 4.486-10 10s4.486 10 10 10 10-4.486 10-10-4.486-10-10-10zM18 13h-6.75V6h2v5H18v2z"></path></svg>
+                            Cập nhật : {{splitT this}}
+                        {{/with}}
+                    </li>
+                    <li style="display: flex; align-items: center;" class="roboto-regular">
+                        {{#with director}}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:; margin-right: 5px"><path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path></svg>
+                            Tác giả : {{this}}
+                        {{/with}}
+                    </li>
+                    <li style="display: flex; align-items: center;" class="roboto-regular">
+                        {{#with status}}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:; margin-right: 5px"><path d="M12 6c3.537 0 6.837 1.353 9.293 3.809l1.414-1.414C19.874 5.561 16.071 4 12 4c-4.071.001-7.874 1.561-10.707 4.395l1.414 1.414C5.163 7.353 8.463 6 12 6zm5.671 8.307c-3.074-3.074-8.268-3.074-11.342 0l1.414 1.414c2.307-2.307 6.207-2.307 8.514 0l1.414-1.414z"></path><path d="M20.437 11.293c-4.572-4.574-12.301-4.574-16.873 0l1.414 1.414c3.807-3.807 10.238-3.807 14.045 0l1.414-1.414z"></path><circle cx="12" cy="18" r="2"></circle></svg>
+                        Trạng thái : {{status this}}
+                        {{/with}}
+                    </li>
+                </ul>
+                <div id="types">
+                    {{#each types}}
+                        <span class="badge badge-pill badge-danger">{{this}}</span>
+                    {{/each}}
+                </div>
+                <div id="btns">
+                    {{#with firstChap}}
+                        <a href="/comic?slug={{this.slug}}&id={{getId this.link}}">
+                            <button class="btn btn-warning roboto-bold" style="margin: 10px">Đọc từ đầu</button>
+                        </a>
+                    {{/with}}
+                    {{#with lastChap}}
+                        <a href="/comic?slug={{this.slug}}&id={{getId this.link}}">
+                            <button class="btn btn-warning roboto-bold" style="margin: 10px">Đọc mới nhất</button>
+                        </a>
+                    {{/with}}
+                    <a href="#" id="continue" style="display: none;">
+                            <button class="btn btn-warning roboto-bold" style="margin: 10px" id="continueBtn"></button>
+                    </a>
+                </div>
+            </div> 
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div style="background-color: rgb(229, 231, 235); padding : 20px; margin-top: 10px">
+                <p style="display: flex;align-items: center;" class="roboto-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:; margin-right: 5px"><path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H5V5h14v14z"></path><path d="M11 7h2v2h-2zm0 4h2v6h-2z"></path></svg>
+                Giới Thiệu
+            </p>
+            {{#with content}}
+                <p class="roboto-regular">{{plainText this}}</p>
+            {{/with}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div style="margin-top: 10px;">
+                <p class="roboto-bold" style="margin-left: 20px; display: flex;align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:; margin-right: 5px"><path d="M20 17V7c0-2.168-3.663-4-8-4S4 4.832 4 7v10c0 2.168 3.663 4 8 4s8-1.832 8-4zM12 5c3.691 0 5.931 1.507 6 1.994C17.931 7.493 15.691 9 12 9S6.069 7.493 6 7.006C6.069 6.507 8.309 5 12 5zM6 9.607C7.479 10.454 9.637 11 12 11s4.521-.546 6-1.393v2.387c-.069.499-2.309 2.006-6 2.006s-5.931-1.507-6-2V9.607zM6 17v-2.393C7.479 15.454 9.637 16 12 16s4.521-.546 6-1.393v2.387c-.069.499-2.309 2.006-6 2.006s-5.931-1.507-6-2z"></path></svg>
+            Danh sách chương
+            <button class="btn" style="margin-left: 5px; display: flex;align-items: center;" id="sortBtn" data-sort="asc">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 20h2V8h3L8 4 4 8h3zm13-4h-3V4h-2v12h-3l4 4z"></path></svg>
+            </button>
+            </p>
+            <div id="listChaps">
+                <ul style="list-style: none; max-height: 250px; overflow-y: scroll; padding : 0">
+                    {{#each chapters}}
+                        <a href="/comic?slug={{this.slug}}&id={{getId this.chapter_api_data}}" data-store="{{this.chapter_api_data}}">
+                            <li class="
+                            roboto-regular" style="background-color: rgb(249, 250, 251); margin-bottom: 10px; padding: 8px 10px; border-left: 10px solid #e5e7eb; cursor: pointer;">Chương {{this.chapter_name}}</li>
+                        </a>
+                    {{/each}}
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" id="comment">
+            <p class="roboto-bold" style="display: flex;align-items: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:; margin-right: 5px"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l5.333-4H20c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm0 14H6.667L4 18V4h16v12z"></path></svg>
+            Bình Luận
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        cmtbox = document.querySelector('#comment')
+        cmtbox.innerHTML += `
+            <div class="fb-comments" data-href="https://blue-box-app-chat-demo6224.onrender.com/${window.location.search}" data-width="100%" data-numposts="5"></div>`
+
+        let btnSort = document.querySelector('#sortBtn')
+        btnSort.onclick = function() {
+            let items = document.querySelectorAll('#listChaps ul a')
+            let arr = Array.from(items)
+            arr.reverse()
+            let ul = document.querySelector('#listChaps ul')
+            ul.innerHTML = ''
+            arr.forEach(item => {
+                ul.appendChild(item)
+            })
+        }
+        });
+
+        let continueA = document.querySelector('#continue')
+        let continueBtn = document.querySelector('#continueBtn')
+        let arr = JSON.parse(localStorage.getItem('reading'))
+        console.log(arr)
+        arr.forEach(item => {
+            if(item.slug == new URLSearchParams(window.location.search).get('slug')) {
+                continueA.style.display = 'block'
+                continueA.setAttribute('href',`/comic?slug=${item.slug}&id=${item.id}`)
+                continueBtn.innerText = 'Đọc tiếp chap ' + item.chapName
+            }
+        })
+</script>

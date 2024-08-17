@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QComic</title>
+    <link rel="icon" type="image/x-icon" href="/images/logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/fonts.css">
-    <script src="./js/jquery-3.7.1.min.js"></script>
+
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <script src="/js/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="./js/pagination.js"></script>
+    <script src="/js/pagination.js"></script>
+    <script src="/js/aos.js"></script>
 </head>
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
@@ -18,5 +24,56 @@
     {{>header}}
     {{{body}}}
     {{>footer}}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v20.0&appId=3843349005912899" nonce="Fl9YI6ud">
+</script>
 </body>
+<script>
+    window.onload = function() {
+        fetch('https://otruyenapi.com/v1/api/the-loai')
+        .then(response => response.json())
+        .then(data => {
+            let items = data.data.items
+            let dropdownMenu = document.querySelector('.dropdown-menu')
+            dropdownMenu.innerHTML = '<button type="button" class="close-dropdown-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg></button>'
+            items.forEach(item => {
+                dropdownMenu.innerHTML += `<span class="badge badge-pill badge-danger roboto-medium"><a href="/the-loai/${item.slug}?page=1">${item.name}</a></span>`
+            })
+        })
+        .catch(err => console.log(err))
+
+        let pathName = window.location.pathname;
+        let slug = pathName.split('/')[1] || 'truyen-moi'
+        let navItemActive = document.querySelector('.nav-link.active');
+        if(navItemActive) navItemActive.classList.remove('active')
+        const navLink = document.querySelector(`.nav-link[data-store="${slug}"]`)
+        if (navLink) {
+            navLink.classList.add('active')
+        }
+
+
+        let searchBtn = document.querySelector('#searchBtn')
+        searchBtn.onclick = function() {
+            search()
+        }
+        document.onkeydown = function(e) {
+            if(e.key == 'Enter' && document.querySelector('#searchInput') == document.activeElement) {
+                search()
+            }
+        }
+
+        function search() {
+            let input = document.querySelector('#searchInput').value
+            location.href = `/tim-kiem?keyword=${input}&page=1`
+        }
+
+        document.querySelector('.close-dropdown-btn').addEventListener('click', function() {
+            document.querySelector('.dropdown-menu').classList.remove('show'); // Đóng dropdown
+        });
+
+    }
+</script>
+<script>
+  AOS.init();
+</script>
 </html>

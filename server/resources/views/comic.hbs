@@ -1,0 +1,112 @@
+{{#with slug}}
+    <script>
+        localStorage.setItem('inforPage','{{this}}')
+    </script>
+{{/with}}
+{{#with readingData}}
+    <script>
+        let arr = JSON.parse(localStorage.getItem('reading')) || []
+        let obj = {{{json this}}}
+        let res = false
+        arr.forEach((item,index) => {
+            if(item.slug == obj.slug) {
+                arr.splice(index,1)
+                arr.push(obj)
+                localStorage.setItem('reading',JSON.stringify(arr))
+                res = true
+                return
+            }
+        })
+        if(!res) {
+            arr.push(obj)
+            localStorage.setItem('reading',JSON.stringify(arr))
+        }
+        console.log(arr)
+    </script>
+{{/with}}
+<div class="container">
+    <div class="row">
+        <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+            <div class="nav" style="margin-top: 30px; margin-bottom : 30px">
+                <h3 class="roboto-bold" style="color : white">Chương
+                    {{#with chapName}}
+                        {{this}}
+                    {{/with}}
+                    {{#with chapTitle}}
+                        {{this}}
+                    {{/with}}
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-2 col-1"></div>
+        <div class="col-md-8 col-10">
+            {{#each imgPaths}}
+                <img src="{{this}}" alt="" style="width: 100%;">
+            {{/each}}
+        </div>
+        <div class="col-md-2 col-10"></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div id="comment">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="btnControls">
+    <button class="btn roboto-bold" id="scrollTop">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M11 8.414V18h2V8.414l4.293 4.293 1.414-1.414L12 4.586l-6.707 6.707 1.414 1.414z"></path></svg>
+    </button>
+    {{#with preLink}}
+            <button class="btn roboto-bold btnNav" data-href="/comic?slug={{this.slug}}&id={{getId this.link}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path></svg>
+    </button>
+    {{/with}}
+    {{#with nextLink}}
+        <button class="btn btn-warning roboto-bold btnNav" data-href="/comic?slug={{this.slug}}&id={{getId this.link}}">
+        Chương kế
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+    </button>
+    {{/with}}
+</div>
+
+<div id="btnBack">
+    <button class="btn roboto-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M19.002 3h-14c-1.103 0-2 .897-2 2v4h2V5h14v14h-14v-4h-2v4c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.898-2-2-2z"></path><path d="m11 16 5-4-5-4v3.001H3v2h8z"></path></svg>
+    </button>
+</div>
+
+<script>
+    window.onload = function() {
+        cmtbox = document.querySelector('#comment')
+        cmtbox.innerHTML += `
+            <div class="fb-comments" data-href="https://blue-box-app-chat-demo6224.onrender.com/${window.location.search}" data-width="100%" data-numposts="5"></div>`
+
+        let btnScrollTop = document.querySelector('#scrollTop')
+        btnScrollTop.onclick = function() {
+            window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Tạo hiệu ứng cuộn mượt mà
+            });
+        }
+
+        let btnBack = document.querySelector('#btnBack')
+        btnBack.onclick = function() {
+            let slug = localStorage.getItem('inforPage')
+            if(slug == null) {
+                location.href = '/'
+            }else {
+                location.href = `/infor?slug=${slug}`
+            }
+        }
+        let btnNav = document.querySelectorAll('.btnNav')
+        btnNav.forEach(item => {
+            item.onclick = function() {
+                location.href = item.getAttribute('data-href')
+            }
+        })
+}
+</script>

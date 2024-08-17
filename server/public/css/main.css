@@ -1,0 +1,183 @@
+#pagination ul {
+    display: flex;
+}
+
+#pagination ul li{
+    list-style: none;
+    padding: 10px;
+}
+
+#pagination ul li a {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.card-img-top {
+    height: 220px;
+}
+
+a{
+    text-decoration: none !important;
+    color: black;
+}
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+}
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav ul  {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin: 0 !important;
+}
+.nav ul li {
+    padding: 10px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.active {
+    background-color: rgb(245, 177, 18) !important;
+    color: black !important;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+/* .dropdown-menu {
+    width: 80vw !important;
+    padding: 10px;
+    flex-wrap: wrap;
+    background-color: rgb(249, 250, 251);
+    border: none;
+    outline: none;
+    box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5);
+} */
+
+.dropdown-menu {
+    width: 80vw !important; /* Độ rộng 80% của viewport */
+    padding: 10px;
+    background-color: rgb(249, 250, 251);
+    border: none;
+    outline: none;
+    box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 50%; /* Đặt chính giữa so với nút bấm */
+    transform: translateX(-50%); /* Điều chỉnh lại để căn giữa */
+    top: 100%; /* Đặt dropdown menu ngay dưới nút bấm */
+    z-index: 1000; /* Đảm bảo dropdown nằm trên các phần tử khác */
+}
+
+/* Đảm bảo dropdown có position relative */
+.dropdown {
+    position: relative;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 600px) {
+    .dropdown-menu {
+        width: 95vw !important; /* Tăng kích thước trên thiết bị di động */
+    }
+}
+
+
+.badge {
+    padding: 10px;
+    margin: 10px;
+}
+
+.badge a {
+    color: white;
+}
+
+.paginationjs-pages {
+    display: flex;
+    justify-content: center;
+}
+.paginationjs-pages ul{
+    padding: 0;
+}
+#pagination ul li {
+    border:2px solid rgb(245, 177, 18);
+    padding: 10px 20px;
+    border-right: none;
+    cursor: pointer;
+}
+
+#pagination ul li:last-child {
+    border-right: 2px solid rgb(245, 177, 18) ;
+}
+
+.category {
+    background-color: rgba(240, 240, 240, 0.8);
+    display: flex;
+    align-items: center;
+}
+
+.truncated-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#listChaps ul li:hover {
+    background-color: #e5e7eb !important;
+}
+
+.close-dropdown-btn {
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 16px;
+    padding: 5px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+
+.card {
+    position: relative;
+}
+.chap {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+@media (max-width: 600px) {
+    .row > [class*='col-'] {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+#btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#types {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

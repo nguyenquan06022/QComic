@@ -1,0 +1,156 @@
+/* Đặt vị trí tuyệt đối cho card và container */
+.container {
+    position: relative; /* Để định vị card trong container */
+    overflow: hidden; /* Đảm bảo không có phần tử vượt ra ngoài container */
+}
+
+/* Đặt header và body không che khuất card */
+#header {
+    padding: 0;
+    position: relative; /* Để không che card */
+    z-index: 1; /* Đặt z-index thấp hơn để card nằm trên */
+    max-height: 40vh; /* Đặt chiều cao tối đa cho header */
+    width: 100%;
+    overflow: hidden;
+}
+
+#header img {
+    width: 100%;
+    object-fit: cover;
+    filter: brightness(70%);
+}
+
+#body {
+    position: relative; /* Để không che card */
+    background-color: rgb(247, 247, 247);
+    z-index: 1; /* Đặt z-index thấp hơn để card nằm trên */
+}
+
+/* Card nằm giữa phần header và body */
+.card {
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    width: 60%; /* Đặt chiều rộng mặc định */
+    max-width: 600px; /* Đặt chiều rộng tối đa */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 1rem; /* Padding mặc định */
+    position: absolute; /* Đặt vị trí tuyệt đối để căn giữa */
+    top: 0; /* Đặt card giữa theo chiều dọc */
+    left: 50%; /* Đặt card giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Căn giữa chính xác */
+    z-index: 10; /* Đảm bảo card nằm trên cả header và body */
+}
+
+/* Responsive cho card */
+@media (max-width: 768px) {
+    .card {
+        width: 90%; /* Đặt chiều rộng cho các màn hình nhỏ */
+        max-width: 500px; /* Đặt chiều rộng tối đa cho các màn hình nhỏ */
+        padding: 1rem; /* Padding cho các màn hình nhỏ */
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        width: 95%; /* Đặt chiều rộng cho các màn hình rất nhỏ */
+        max-width: 400px; /* Đặt chiều rộng tối đa cho các màn hình rất nhỏ */
+        padding: 0.5rem; /* Padding cho các màn hình rất nhỏ */
+    }
+}
+
+/* Thiết lập cho tiêu đề trong card */
+#Hi {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    padding: 0;
+}
+
+/* Thiết lập cho các phần khác */
+.content {
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    z-index: 0; /* Đảm bảo content nằm dưới card */
+    position: relative;
+    padding: 0 1rem; /* Thêm padding để tránh chồng lấp trên màn hình nhỏ */
+}
+
+#contact {
+    height: 40vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 0; /* Đặt z-index thấp hơn để không che khuất card */
+}
+
+#contact img {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: brightness(70%);
+    object-fit: cover;
+}
+
+.contact-infor {
+    padding: 10px 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+    z-index: 0; 
+}
+
+.contact-head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.content p {
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.contact-body {
+    width: 100%;
+}
+
+.contact-body ul {
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.contact-body ul li {
+    margin: 10px;
+    list-style: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.contact-body ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#btnBack {
+    z-index: 1;
+    top: 10px;
+    left: 10px;
+    position: fixed;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
