@@ -1,0 +1,97 @@
+
+.form {
+    width: 100%;
+    background-color: black;
+}
+#bodyForm {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    height: 100vh;
+}
+
+form {
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.3);
+    background-color: rgb(243, 243, 243);
+    padding: 10px 20px 30px 20px;
+    border-radius: 5px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+#btnGg {
+    display: flex;
+    justify-content: center;
+}
+
+#btnBack {
+    top: 10px;
+    left: 10px;
+    position: fixed;
+}
+
+.error {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: red;
+}
+
+.btn {
+    font-weight: 700 !important;
+}
+
+.fail {
+    border-left: 10px solid rgb(220, 53, 69) !important;
+    border: 1px solid rgb(220, 53, 69);
+}
+
+.success {
+    border-left: 10px solid rgb(40, 167, 69) !important;
+    border: 1px solid rgb(40, 167, 69);
+}
+
+.toast {
+    right: -100px;
+    top: 10px;
+    position: fixed;
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 8px 16px;
+    animation: 
+        showToast 1s ease forwards,
+        hideToast 1s ease forwards 2s;
+}
+
+.toast p {
+    margin-bottom: 0 !important;
+}
+
+@keyframes showToast {
+    0% {
+        opacity: 0;
+        right: -100px;
+    }
+    100% {
+        opacity: 1;
+        right: 10px;
+    }
+}
+
+@keyframes hideToast {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

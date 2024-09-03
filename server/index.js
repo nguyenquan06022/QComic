@@ -2,10 +2,18 @@ const express = require('express')
 const {engine} = require('express-handlebars')
 const morgan = require('morgan')
 const router = require('./resources/routers/index')
+const moment = require('moment');
+require('moment/locale/vi');
+require('moment-duration-format'); 
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const port = process.env.PORT || 3000
+const auth = require('./resources/passports/passports')
+const db = require('./config/db/connectDB')
+require('dotenv').config()
 const app = express()
 
+app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('combined'))
@@ -36,15 +44,30 @@ app.engine('hbs',engine({
             if(string == 'completed') return 'Hoàn thành'
             else if(string == 'ongoing') return 'Đang cập nhật'
             else return 'Sắp ra mắt'
+        },
+        toastStatus : function(string) {
+            console.log(string)
+            if(string == 'true') return 'success'
+            else return 'fail'
+        },
+        toastMessage : function(string) {
+            if(string == 'true') return 'Đăng kí thành công.'
+            else return 'Tài khoản hoặc mật khẩu không hợp lệ.'
+        },
+        timeAgo: function(dateString) {
+            moment.locale('vi');
+            return moment(dateString).fromNow(); 
         }
     }
 }))
 app.set('view engine','hbs')
 app.set('views','./resources/views')
 
+db.connect()
+auth(app)
 router(app)
 
 app.listen(port, () => {
-    console.log('oke')
+    console.log('Listening at port: ' + port)
 })
 

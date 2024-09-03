@@ -2,7 +2,7 @@
     <div class="row logo">
             <div class="col-md-4 col-6" style="display: flex; align-items: center">
             <div>
-            <img src="/images/fulllogo.png" alt="" style="width: 100%">
+            <a href="/"><img src="/images/fulllogo.png" alt="" style="width: 100%"></a>
             </div>
             </div>
             <div class="col-md-4 col-6" style="display: flex; align-items: center">
@@ -14,15 +14,30 @@
                     <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
                 </svg>
             </button>
-        </div>
-        </div>
+            </div>
+            </div>
             </div>
             <div class="col-md-4 col-12" style="display: flex; align-items:center; justify-content:center">
             <div class="nav">
             <ul>
                 <li><a href="/" class="roboto-bold">Trang Chủ</a></li>
                 <li><a href="/blog-nha-phat-trien" class="roboto-bold">Blog Nhà Phát Triển</a></li>
-                <li><a href="/dangky-dangnhap" class="roboto-bold">Tài Khoản</a></li>
+                {{#if authenticated}}
+                    <li><a href="/user-infor">
+                    <div class="avatar roboto-bold" style="background-color: #F3F3F3;
+                    padding: 10px; border-radius: 50%; display: flex;
+                    justify-content : center;
+                    align-items: center;
+                    width: 50px;
+                    height: 50px;
+                    overflow : hidden;
+                    ">
+                        <img src="/images/avatars/{{authenticated.avt}}.jpg" alt="" style="width: 200%;">
+                    </div>
+                    </a></li>
+                {{else}}
+                    <li><a href="/dangnhap" class="roboto-bold">Tài Khoản</a></li>
+                {{/if}}
             </ul>
             </div>
             </div>
@@ -69,3 +84,16 @@
         </div>
     </div>
 </div>
+<script>
+    fetch('https://otruyenapi.com/v1/api/the-loai')
+        .then(response => response.json())
+        .then(data => {
+            let items = data.data.items
+            let dropdownMenu = document.querySelector('.dropdown-menu')
+            dropdownMenu.innerHTML = '<button type="button" class="close-dropdown-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg></button>'
+            items.forEach(item => {
+                dropdownMenu.innerHTML += `<span class="badge badge-pill badge-danger roboto-medium"><a href="/the-loai/${item.slug}?page=1">${item.name}</a></span>`
+            })
+        })
+        .catch(err => console.log(err))
+</script>

@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="row" id="bodyForm">
+        <div class="col-md-3 col-0"></div>
+        <div class="col-md-6 col-12">
+            <form action="/sign-up?_method=POST" id="formValidateSignUp" class="formSignUp" method="POST">
+                    <div class="title roboto-bold">Đăng Ký</div>
+                    <div class="form-group">
+                      <label for="username" class="roboto-bold">Tài khoản: </label>
+                      <input type="text" name="username" class="form-control" placeholder="Nhập tài khoản" id="username">
+                    </div>
+                    <div class="form-group">
+                      <label for="pwd" class="roboto-bold">Mật khẩu:</label>
+                      <input type="password" name="pwd" class="form-control pass" placeholder="Nhập mật khẩu" id="pwd">
+                    </div>
+                    <div class="form-group">
+                      <label for="repwd" class="roboto-bold">Xác nhận mật khẩu:</label>
+                      <input type="password" name="repwd" class="form-control pass" placeholder="Nhập lại mật khẩu" id="repwd">
+                    </div>
+                    <div style="display: flex; align-items:center padding : 8px; margin : 10px 0px" class="roboto-regular">
+                      <input type="checkbox" id="btnShowPass" style="margin-right: 10px;">
+                      <label for="btnShowPass" style="user-select: none; margin-bottom : 0 !important">Hiển thị mật khẩu
+                      </label>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-block roboto-bold" style="color: black;">Đăng Ký Ngay
+                    </button>
+                    <div style="display: flex; justify-content:center; padding : 8px">
+                        <a href="/dangnhap" class="roboto-regular">Đăng Nhập</a>
+                    </div>
+                </form>
+        </div>
+        <div class="col-md-3 col-0"></div>
+    </div>
+</div>
+<div id="btnBack">
+    <a href="/">
+        <button class="btn btn-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path></svg>
+    </button>
+    </a>
+</div>
+
+{{#with notify}}
+  <div class="toast fail">
+  <p class="roboto-regular">Tài khoản đã tồn tại.</p>
+  </div>
+{{/with}}
+
+<script>
+    $(document).ready(function() {
+        let toast = document.querySelector('.toast')
+        if(toast) toast.toast('show')
+        let btnShowPass = document.querySelector('#btnShowPass')
+        btnShowPass.onclick = function() {
+        let formControls = document.querySelectorAll('.pass')
+          if(btnShowPass.checked) {
+            formControls.forEach(item => {
+              item.type = "text"
+            })
+          }else {
+            formControls.forEach(item => {
+              item.type = "password"
+            })
+          }
+        }
+        $('#formValidateSignUp').validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 2
+                },
+                pwd: {
+                    required: true,
+                    minlength: 6
+                },
+                repwd: {
+                  required: true,
+                  equalTo: "#pwd"
+                }
+            },
+            messages: {
+                username: {
+                    required: 'Vui lòng nhập trường này',
+                    minlength: 'Tên đăng nhập phải dài hơn 2 ký tự'
+                },
+                pwd: {
+                    required: 'Vui lòng nhập trường này',
+                    minlength: 'Mật khẩu phải dài hơn 6 ký tự'
+                },
+                repwd: {
+                  required: 'Vui lòng nhập trường này',
+                  equalTo: 'Mật khẩu không trùng khớp'
+                }
+            },
+            submitHandler: function(form) {
+                form.submit()
+            }
+        })
+    })
+</script>

@@ -61,16 +61,6 @@ a{
     flex-grow: 1;
 }
 
-/* .dropdown-menu {
-    width: 80vw !important;
-    padding: 10px;
-    flex-wrap: wrap;
-    background-color: rgb(249, 250, 251);
-    border: none;
-    outline: none;
-    box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5);
-} */
-
 .dropdown-menu {
     width: 80vw !important; /* Độ rộng 80% của viewport */
     padding: 10px;
@@ -117,12 +107,12 @@ a{
 #pagination ul li {
     border:2px solid rgb(245, 177, 18);
     padding: 10px 20px;
-    border-right: none;
+    border-right: none !important;
     cursor: pointer;
 }
 
 #pagination ul li:last-child {
-    border-right: 2px solid rgb(245, 177, 18) ;
+    border-right: 2px solid rgb(245, 177, 18) !important;
 }
 
 .category {
@@ -167,6 +157,9 @@ a{
     .row > [class*='col-'] {
         padding-left: 5px;
         padding-right: 5px;
+    }
+    #pagination ul li:last-child {
+        border-right: 1px solid rgb(245, 177, 18) !important;
     }
 }
 

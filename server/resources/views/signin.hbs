@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row" id="bodyForm">
+        <div class="col-md-3 col-0"></div>
+        <div class="col-md-6 col-12">
+            <form action="/login-local?_method=POST" id="formValidate" class="formSignIn" method="POST">
+                    <div class="title roboto-bold">Đăng Nhập</div>
+                    <div class="form-group">
+                      <label for="username" class="roboto-bold">Tài khoản: </label>
+                      <input type="text" name="username" class="form-control" placeholder="Nhập tài khoản" id="username">
+                    </div>
+                    <div class="form-group">
+                      <label for="password" class="roboto-bold">Mật khẩu:</label>
+                      <input type="password" name="password" class="form-control pass" placeholder="Nhập mật khẩu" id="password">
+                    </div>
+                    <div style="display: flex; align-items: center; padding : 8px; margin : 10px 0px" class="roboto-regular">
+                      <input type="checkbox" id="btnShowPass" style="margin-right: 10px;">
+                      <label for="btnShowPass" style="margin: 0">Hiển thị mật khẩu</label>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-block roboto-bold" style="color: black;margin-bottom : 10px">Đăng Nhập Ngay
+                    </button>
+                    <a href="/auth/google"><button type="button" class="btn btn btn-info btn-block roboto-bold" id="btnGg">
+                        Đăng Nhập Với Google
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: white;transform: ;msFilter:;"><path d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"></path></svg>
+                    </button></a>
+                    <div style="display: flex; justify-content:center; padding : 8px">
+                        <a href="/dangky" class="roboto-regular">Đăng ký tài khoản</a>
+                    </div>
+                </form>
+        </div>
+        <div class="col-md-3 col-0"></div>
+    </div>
+</div>
+<div id="btnBack">
+    <a href="/">
+        <button class="btn btn-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path></svg>
+    </button>
+    </a>
+</div>
+
+{{#with notify}}
+  <div class="toast {{toastStatus this}}">
+  <p class="roboto-regular">{{toastMessage this}}</p>
+  </div>
+{{/with}}
+
+<script>
+    window.onload = function() {
+        let btnShowPass = document.querySelector('#btnShowPass')
+        btnShowPass.onclick = function() {
+        let formControls = document.querySelectorAll('.pass')
+          if(btnShowPass.checked) {
+            formControls.forEach(item => {
+              item.type = "text"
+            })
+          }else {
+            formControls.forEach(item => {
+              item.type = "password"
+            })
+          }
+        }
+    }
+</script>

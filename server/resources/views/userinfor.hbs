@@ -1,0 +1,402 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 col-3" style="padding:0;">
+            <nav class="navbar">
+            <ul class="navbar-nav">
+                <li class="nav-item active" data-title="card-infor">
+                    <div class="roboto-bold">Thông tin</div>
+                </li>
+                <li class="nav-item" data-title="history">
+                    <div class="roboto-bold">Lịch sử</div>
+                </li>
+                <li class="nav-item" data-title="followComic">
+                    <div class="roboto-bold">Theo dõi</div>
+                </li>
+                <li class="nav-item">
+                    <div class="roboto-bold" id="btnLogOut" data-toggle="modal" data-target="#myModalLogOut">Đăng xuất</div>
+                </li>
+            </ul>
+        </nav>
+        </div>
+        <div class="col-md-10 col-9" style="padding:0">
+            <div class="card-infor item">
+                    <div class="card">
+                    <div class="head container">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="avatar" data-toggle="modal" data-target="#myModalAvatar">
+                            {{#with avt}}
+                                <img src="/images/avatars/{{this}}.jpg" alt="" style="width: 100%;">
+                            {{/with}}
+                        </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="username roboto-bold-italic">
+                            {{#with username}}
+                                <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{this}}</p>
+                            {{/with}}
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{#if gg_id}}
+                        {{else}}
+                        <div class="body">
+                            <form action="" id="formChangePass">
+                                <div class="row">
+                                    <div class="col-md-5 col-12 body-item">
+                                        <span style="display: flex; align-items:center">
+                                        <label for="password" class="roboto-bold" style="margin-bottom: 0; margin-right :10px; min-width: 72px;">Mật khẩu:</label>
+                                        <input type="password" class="form-control" id="password" disabled>
+                                    </span>
+                                    </div>
+                                    <div class="col-md-3 col-12 body-item">
+                                        <span style="display: flex; align-items:center">
+                                        <input type="checkbox" id="showPass" style="margin-right: 10px;">
+                                        <label for="showPass" class="roboto-regular" style="margin-bottom: 0; user-select:none ">Hiện mật khẩu</label>
+                                    </span>
+                                    </div>
+                                    <div class="col-md-4 col-12 body-item">
+                                        <button type="button" id="btnChangePass" class="btn btn-warning roboto-bold btn-block" data-toggle="modal" data-target="#myModalChangePassWord">Đổi mật khẩu</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="history item" style="display: none;">
+                <div class="title">
+                    <div class="row">
+                        <div class="col-md-6 col-12 roboto-regular" style="display: flex; align-items:center">
+                            <h4>Lịch Sử Đọc Truyện</h4>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="input-group" style="height: 40px;">
+                        <input type="text" class="form-control roboto-light-italic searchInput" placeholder="Tìm truyện" style="border-radius:.25rem 0 0 .25rem !important;" data-search="listHistory">
+                        <button class="btn btn-outline-secondary searchBtn" type="button" style="display: flex; justify-content: center; align-items: center; background-color: rgb(245, 177, 18); border: none; border-radius:0 .25rem .25rem 0 !important;" data-search="listHistory">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+                                <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
+                            </svg>
+                        </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="history-body">
+                    {{#if historyComic.length}}
+                        <ul id="listHistory">
+                            {{#each historyComic}}
+                                <li>
+                                    <a href="{{linkChap}}">
+                                        <div class="delete-btn" data-store="{{slug}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                                        </div>
+                                        <div class="history-item">
+                                        <div class="history-img">
+                                            <img src="{{img}}" alt="" width="48" height="72">
+                                        </div>
+                                        <div class="history-infor">
+                                            <div class="history-title roboto-bold name">
+                                            {{comicName}}
+                                        </div>
+                                        <div class="history-time">
+                                            <p class="roboto-regular" style="margin-bottom:0">{{timeAgo readAt}}</p>
+                                        </div>
+                                        </div>
+                                        <div class="history-chap">
+                                            <span class="badge badge-danger" style="padding: 10px;">Chap {{chapName}}</span>
+                                        </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    {{else}}
+                        <div class="empty">
+                            <img src="./images/empty.svg" alt="" width="100%" height="100%">
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+             <div class="followComic item" style="display: none;">
+                <div class="title">
+                    <div class="row">
+                        <div class="col-md-6 col-12 roboto-regular" style="display: flex; align-items:center">
+                            <h4>Truyện Đang Theo Dõi</h4>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="input-group" style="height: 40px;">
+                        <input type="text" class="form-control roboto-light-italic searchInput" placeholder="Tìm truyện" style="border-radius:.25rem 0 0 .25rem !important;" data-search="listFollow">
+                        <button class="btn btn-outline-secondary searchBtn" type="button" style="display: flex; justify-content: center; align-items: center; background-color: rgb(245, 177, 18); border: none; border-radius:0 .25rem .25rem 0 !important;" data-search="listFollow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+                                <path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path>
+                            </svg>
+                        </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="follow-body">
+                    {{#if followComic}}
+                        <ul id="listFollow">
+                            {{#each followComic}}
+                                <li>
+                                    <a href="">
+                                        <div class="delete-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                                        </div>
+                                        <div class="follow-item">
+                                        <div class="follow-img">
+                                            <img src="https://otruyenapi.com/uploads/comics/kingdom-vuong-gia-thien-ha-thumb.jpg" alt="" width="48" height="72">
+                                        </div>
+                                        <div class="follow-infor">
+                                            <div class="follow-title roboto-bold name">
+                                            Vuong Gia Thien Ha
+                                        </div>
+                                        <div class="follow-time">
+                                            <p class="roboto-regular" style="margin-bottom:0">12 giờ trước</p>
+                                        </div>
+                                        </div>
+                                        <div class="follow-chap">
+                                            <span class="badge badge-danger" style="padding: 10px;">Chap 32</span>
+                                        </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    {{else}}
+                        <div class="empty">
+                            <img src="./images/empty.svg" alt="" width="100%" height="100%">
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#with password}}
+    <div id="passwordStore" data-store="{{this}}" ></div>
+{{/with}}
+
+<div id="btnBack">
+    <a href="/">
+        <button class="btn btn-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path></svg>
+    </button>
+    </a>
+</div>
+
+<div class="modal" id="myModalLogOut">
+    <div class="modal-dialog" style="top:30%">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Bạn có muốn đăng xuất?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-block roboto-bold" data-dismiss="modal" id="btnConfirmLogOut">Ok</button>
+                </div>
+                </div>
+            </div>
+</div>
+
+<div class="modal" id="myModalChangePassWord">
+    <div class="modal-dialog" style="top:10%">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Đổi Mật Khẩu</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/updatePass?_method=POST" id="formChangePassWord" method="POST">
+                            <label for="newPassWord" class="roboto-bold">Mật khẩu mới:</label>
+                            <br>
+                            <input type="password" class="form-control" id="newPassWord" name="newPassWord">
+                            <br>
+                            <label for="reNewPassWord" class="roboto-bold">Nhập lại mật khẩu:</label>
+                            <input type="password" class="form-control"  id="reNewPassWord" name="reNewPassWord">
+                            <br>
+                            <span style="display: flex; align-items:center">
+                                        <input type="checkbox" id="showPass1" style="margin-right: 10px;">
+                                        <label for="showPass1" class="roboto-regular" style="margin-bottom: 0; user-select:none ">Hiện mật khẩu<label>
+                            </span>
+                            <br>
+                            <button type="submit" class="btn btn-danger btn-block roboto-bold" id="btnConFirmChanePassWord">Ok</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+</div>
+
+<div class="modal" id="myModalAvatar">
+    <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Chọn Avatar</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-3"><img src="/images/avatars/avt1.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt2.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt3.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt4.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt5.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt6.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt7.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt8.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt9.jpg" style="width: 100%;" alt=""></div>
+                        <div class="col-3"><img src="/images/avatars/avt10.jpg" style="width: 100%;" alt=""></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-block roboto-bold" data-dismiss="modal" id="btnConfirmAvatar">Ok</button>
+                </div>
+                </div>
+            </div>
+</div>
+
+<script>
+    window.onload = function() {
+        let btnConFirmChanePassWord = document.querySelector('#btnConFirmChanePassWord')
+        let avatars = document.querySelectorAll('.modal-body .row .col-3 img')
+        let items = document.querySelectorAll('.item')
+        let btnConfirmLogOut = document.querySelector('#btnConfirmLogOut')
+        let curSrcAvt = document.querySelector('.avatar img').src
+        let showPass1 = document.querySelector('#showPass1')
+        let navItems = document.querySelectorAll('.nav-item')
+        let showPass = document.querySelector('#showPass')
+        let inputPass = document.querySelector('#password')
+        let btnConfirmAvatar = document.querySelector('#btnConfirmAvatar')
+        let deleteBtn = document.querySelectorAll('.delete-btn')
+        let searchBtns = document.querySelectorAll('.searchBtn')
+        if(searchBtns) {
+            searchBtns.forEach(item => {
+                let input = document.querySelector(`.searchInput[data-search=${item.getAttribute('data-search')}]`)
+                let list = document.querySelector(`#${item.getAttribute('data-search')}`)
+
+                if (input) {
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.keyCode === 13) {
+                        item.click();
+                        }
+                    });
+                }
+
+                item.onclick = function search(){
+                    if(!list) return
+                    let value = input.value.toLowerCase()
+                    let lis = list.querySelectorAll('li')
+                        lis.forEach(li => {
+                        let name = li.querySelector('.name').innerText.toLowerCase()
+                        if(!name.includes(value)) li.style.display = 'none'
+                        else li.style.display = 'block'
+                    })
+                }
+        })
+        }
+
+        if(deleteBtn) {
+            deleteBtn.forEach(item => {
+                item.onclick = function(e) {
+                    e.preventDefault();
+                    let slug = item.getAttribute('data-store')
+                    $.ajax({
+                        url : `/deleteHistoryComic?slug=${slug}`,
+                        method : 'DELETE',
+                    });
+                    let parentLi = item.closest('li')
+                    parentLi.classList.add('delete')
+                    setTimeout(()=>{
+                        item.closest('ul').removeChild(parentLi)
+                    },1000)
+                }
+            })
+        }
+
+        navItems.forEach(item => {
+            item.onclick = function() {
+                document.querySelector('.active').classList.remove('active')
+                item.classList.add('active')
+                if(item.innerText == 'Đăng xuất') return
+                let itemActive = item.getAttribute('data-title')
+                items.forEach(x => {
+                    if(x.classList.contains(itemActive)) {
+                        x.style.display = 'flex'
+                    }
+                    else {
+                        x.style.display = 'none'
+                    }
+                })
+            }
+        })
+
+        Array.from(avatars).find(img => img.src === curSrcAvt).classList.add('activeAvt')
+        avatars.forEach(item => {
+            item.onclick = function() {
+            document.querySelector('.modal-body .row .col-3 .activeAvt').classList.remove('activeAvt')
+            item.classList.add('activeAvt')
+            }
+        })
+
+        btnConfirmLogOut.onclick = function() {
+            location.href = '/logout'
+        }
+
+        btnConfirmAvatar.onclick = function() {
+            let src = document.querySelector('.activeAvt').src
+            let regex = /avt\d+/
+            location.href =`updateAvt?avt=${src.match(regex)[0]}`
+        }
+
+        if(document.querySelector('#passwordStore')) {
+            inputPass.value = document.querySelector('#passwordStore').getAttribute('data-store')
+        }
+        if(showPass) {
+            showPass.onclick = function() {
+            if(showPass.checked) inputPass.setAttribute('type','text')
+            else inputPass.setAttribute('type','password')
+            }
+        }
+
+        showPass1.onclick = function() {
+            if(showPass1.checked) {
+                document.querySelector('#reNewPassWord').setAttribute('type','text')
+                document.querySelector('#newPassWord').setAttribute('type','text')
+            }
+            else {
+                document.querySelector('#reNewPassWord').setAttribute('type','password')
+                document.querySelector('#newPassWord').setAttribute('type','password')
+            }
+        }
+
+        $('#formChangePassWord').validate({
+            rules: {
+                newPassWord: {
+                    required: true,
+                    minlength: 6
+                },
+                reNewPassWord: {
+                  required: true,
+                  equalTo: "#newPassWord"
+                }
+            },
+            messages: {
+                newPassWord: {
+                    required: 'Vui lòng nhập trường này',
+                    minlength: 'Mật khẩu phải dài hơn 6 ký tự'
+                },
+                reNewPassWord: {
+                  required: 'Vui lòng nhập trường này',
+                  equalTo: 'Mật khẩu không trùng khớp'
+                }
+            },
+            submitHandler: function(form) {
+                form.submit()
+            }
+        })
+    }
+</script>

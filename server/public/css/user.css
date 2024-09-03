@@ -1,0 +1,242 @@
+.navbar {
+    background-color: #f3f3f3d4;
+    height: 100vh;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+}
+
+.active {
+    background-color: rgb(255, 193, 7);
+    transition: background-color 0.3s ease;
+}
+
+#btnBack {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+#btnBack button {
+    display: flex;
+    align-items: center;
+}
+.navbar-nav {
+    left: 0px;
+    top: 100px;
+    position: absolute;
+    width: 100%;
+}
+
+.nav-item {
+    padding: 20px 16px;
+    width: 100%;
+}
+
+.nav-item div {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 193, 7, 0.4);
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.card-infor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+.card {
+    padding: 10px;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    border: none;
+    background-color: whitesmoke;
+    width: 90%;
+}
+
+.avatar{
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 100%;
+}
+
+.username {
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+#formChangePass {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#password {
+    width: 60%;
+}
+
+.body {
+    margin-top: 20px;
+    padding: 20px;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.modal-dialog {
+    transform: translate(-50%,-50%);
+}
+.modal-body .row .col-3 {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.modal-body .row .col-3 img{
+    height: 100%;
+    border-radius: 5px;
+}
+
+.activeAvt {
+    border: 2px solid rgb(255, 193, 7);
+}
+
+.body-item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: rgb(220, 53, 69);
+}
+
+.item {
+    padding: 10px;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
+
+.history, .loveComic, .followComic {
+    justify-content: flex-start !important;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.item .title {
+    display: flex;
+}
+.history-body,.love-body, .follow-body {
+    width: 100%;
+    height: 75vh;
+    overflow-y: auto;
+    padding: 10px 10px 0 0;
+}
+.history-item,.love-item, .follow-item {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(229, 231, 235);
+    cursor: pointer;
+}
+
+.history-img,.love-img, .follow-img {
+    overflow: hidden;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.history-title,.love-title, .follow-title {
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        font-size: 15px;
+        color: black;
+}
+.history-chap,.love-chap, .follow-chap {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.history-body ul, .love-body ul, .follow-body ul {
+    padding: 0;
+}
+
+.empty {
+   height: 70vh;
+}
+
+.history-body ul li, .love-body ul li, .follow-body ul li {
+    position: relative;
+    list-style: none;
+    margin: 10px 0px;
+}
+
+.btn-delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.history-delete, .love-delete, .follow-delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-btn {
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 5px;
+    right: 10px
+}
+.delete-btn :hover {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+}
+
+.delete {
+    animation: deleteAnimation 1s ease forwards
+}
+
+@keyframes deleteAnimation {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
+
+.history-infor, .love-infor, .follow-infor {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    justify-content: center;
+}

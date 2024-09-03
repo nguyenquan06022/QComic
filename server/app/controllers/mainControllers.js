@@ -1,9 +1,20 @@
+const VoteComic = require('../models/VoteComic')
+
 class mainControllers {
     renderHome(req,res,next) {
+        let authenticated
+        if(req.user) {
+            authenticated = {
+                username : req.user.username,
+                id : req.user._id,
+                linkInfor : '/user-infor',
+                avt : req.user.avt
+            }
+        }
         getItemsType('truyen-moi',1,'danh-sach')
         .then(data => {
             const { paginationData, items } = data
-            res.render('home',{ paginationData, items })
+            res.render('home',{ paginationData, items, authenticated})
         }).catch(err => {
             console.log(err)
         })
@@ -12,10 +23,19 @@ class mainControllers {
     showList(req,res,next) {
         let type = req.params.type
         let page = req.query.page
+        let authenticated
+        if(req.user) {
+            authenticated = {
+                username : req.user.username,
+                id : req.user._id,
+                linkInfor : '/user-infor',
+                avt : req.user.avt
+            }
+        }
         getItemsType(type,page,'danh-sach')
         .then(data => {
             const { paginationData, items } = data
-            res.render('home',{ paginationData, items })
+            res.render('home',{ paginationData, items,authenticated })
         }).catch(err => {
             console.log(err)
         })
@@ -28,10 +48,19 @@ class mainControllers {
     showTheLoai(req,res,next) {
         let slug = req.params.slug
         let page = req.query.page
+        let authenticated
+        if(req.user) {
+            authenticated = {
+                username : req.user.username,
+                id : req.user._id,
+                linkInfor : '/user-infor',
+                avt : req.user.avt
+            }
+        }
         getItemsType(slug,page,'the-loai')
         .then(data => {
             const { paginationData, items } = data
-            res.render('home',{ paginationData, items })
+            res.render('home',{ paginationData, items, authenticated })
         }).catch(err => {
             console.log(err)
         })
@@ -40,21 +69,46 @@ class mainControllers {
     search(req,res,next) {
         let keyword = req.query.keyword
         let page = req.query.page
+        let authenticated
+        if(req.user) {
+            authenticated = {
+                username : req.user.username,
+                id : req.user._id,
+                linkInfor : '/user-infor',
+                avt : req.user.avt
+            }
+        }
         getItemsSearch(keyword,page)
         .then(data => {
             const { paginationData, items } = data
-            res.render('home',{ paginationData, items })
+            res.render('home',{ paginationData, items, authenticated })
         }).catch(err => {
             console.log(err)
         })
     }
 
-    showInfor(req,res,next) {
+    async showInfor(req,res,next) {
         let slug = req.query.slug
+        let authenticated
+        let voteComic = await VoteComic.findOne({slug : slug})
+        let like
+        let likes = 0
+        if(req.user) {
+            authenticated = {
+                username : req.user.username,
+                id : req.user._id,
+                linkInfor : '/user-infor',
+                avt : req.user.avt
+            }
+            if(voteComic) {
+                like = voteComic.ListUsersReact.filter(item => {return item.userId == req.user._id})
+            }
+        }
+        if(voteComic) likes = voteComic.heart
         getInfor(slug)
-        .then(data => {
+        .then((data) => {
             let {name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt} = data
-            res.render('infor',{name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt})
+            res.render('infor',{name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt,authenticated,slug,like,likes})
         }).catch(err => {
             console.log(err)
         })
@@ -82,8 +136,20 @@ class mainControllers {
         })
     }
 
-    showLoginRegister(req,res,next) {
-        res.render('signup-signin',{layout: 'signUpsignIn'})
+    showSignIn(req,res,next) {
+        res.render('signin',{layout: 'signUpsignIn'})
+    }
+    
+    showSignUp(req,res,next) {
+        res.render('signup',{layout: 'signUpsignIn'})
+    }
+
+    logOut(req,res,next) {
+        req.session.destroy(err => {
+            if(err) console.log(err)
+            res.clearCookie('connect.sid')
+            res.redirect('/dangnhap')
+        })
     }
 }
 
@@ -134,7 +200,8 @@ function getInfor(slug) {
     return fetch(`https://otruyenapi.com/v1/api/truyen-tranh/${slug}`)
     .then(
         response => response.json()
-    ).then(data => {
+    )
+    .then(data => {
         let slug = data.data.item.slug
         let updateAt = data.data.item.updatedAt
         let name = data.data.seoOnPage.seoSchema.name
@@ -158,7 +225,7 @@ function getInfor(slug) {
             link : chapters[chapters.length - 1].chapter_api_data,
             slug : slug
         }
-        console.log(updateAt)
+
         return {name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt}
     }
     ).catch(err => {
@@ -169,8 +236,10 @@ function getInfor(slug) {
 async function getChap(id, slug) {
     try {
         let response = await fetch(`https://sv1.otruyencdn.com/v1/api/chapter/${id}`);
+
         let data = await response.json();
-        let name = data.data.item.comic_name
+        let name = data.data.item.comic_name;
+        name = name.replace(/ \[.+]/g,'')
         let domain = data.data.domain_cdn;
         let chapName = data.data.item.chapter_name;
         let chapTitle = data.data.item.chapter_title;
@@ -179,7 +248,8 @@ async function getChap(id, slug) {
         let imgPaths = imgs.map(function(item) {
             return domain + '/' + path + '/' + item.image_file;
         });
-        let readingData = {name,chapName,slug,id}
+        let img = `https://img.otruyenapi.com/uploads/comics/${slug}-thumb.jpg`
+        let readingData = {name,chapName,slug,id,img}
         response = await fetch(`https://otruyenapi.com/v1/api/truyen-tranh/${slug}`);
         data = await response.json();
 
