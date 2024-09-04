@@ -1,4 +1,5 @@
 const VoteComic = require('../models/VoteComic')
+const UserData = require('../models/UserDatas')
 
 class mainControllers {
     renderHome(req,res,next) {
@@ -91,8 +92,10 @@ class mainControllers {
         let slug = req.query.slug
         let authenticated
         let voteComic = await VoteComic.findOne({slug : slug})
+        let continueComic
         let like
         let likes = 0
+        let continueData
         if(req.user) {
             authenticated = {
                 username : req.user.username,
@@ -103,12 +106,16 @@ class mainControllers {
             if(voteComic) {
                 like = voteComic.ListUsersReact.filter(item => {return item.userId == req.user._id})
             }
+            continueComic = await UserData.findOne({accout_ID : req.user._id})
+            if(continueComic) {
+                continueData = continueComic.historyComic.filter(item => {return item.slug == slug})[0]
+            }
         }
         if(voteComic) likes = voteComic.heart
         getInfor(slug)
         .then((data) => {
             let {name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt} = data
-            res.render('infor',{name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt,authenticated,slug,like,likes})
+            res.render('infor',{name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt,authenticated,slug,like,likes,continueData})
         }).catch(err => {
             console.log(err)
         })

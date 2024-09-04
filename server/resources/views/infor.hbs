@@ -60,9 +60,11 @@
                             <button class="btn btn-warning roboto-bold" style="margin: 10px">Đọc mới nhất</button>
                         </a>
                     {{/with}}
-                    <a href="#" id="continue" style="display: none;">
-                            <button class="btn btn-warning roboto-bold" style="margin: 10px" id="continueBtn"></button>
-                    </a>
+                    {{#if continueData}}
+                        <a href="{{linkChap}}" id="continue">
+                            <button class="btn btn-warning roboto-bold" style="margin: 10px" id="continueBtn">{{chapName}}</button>
+                        </a>
+                    {{/if}}
                     {{#if authenticated}}
                         {{#if like}}
                             <a href="/removeLikeComic?slug={{slug}}" id="like">
@@ -159,7 +161,7 @@
         let continueA = document.querySelector('#continue')
         let continueBtn = document.querySelector('#continueBtn')
 
-        $.ajax({
+        {{!-- $.ajax({
             url : '/getHistoryComic',
             method : 'GET',
             success: function(response) {
@@ -167,8 +169,10 @@
                     response.forEach(item => {
                         if(item.slug == new URLSearchParams(window.location.search).get('slug')) {
                             continueA.style.display = 'block'
-                            continueA.setAttribute('href',`/comic?slug=${item.slug}&id=${item.id}`)
+                            console.log(item)
+                            continueA.href = `${item.linkChap}`
                             continueBtn.innerText = 'Đọc tiếp chap ' + item.chapName
+                            return
                         }
                     })
                 }
@@ -176,5 +180,5 @@
             error: function(error) {
                 console.log(err)
             }
-        });
+        }); --}}
 </script>
