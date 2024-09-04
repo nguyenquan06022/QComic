@@ -108,7 +108,9 @@ class mainControllers {
             }
             continueComic = await UserData.findOne({accout_ID : req.user._id})
             if(continueComic) {
-                continueData = continueComic.historyComic.filter(item => {return item.slug == slug})[0]
+                continueData = continueComic.historyComic.map(item=>item.toObject())
+                continueData = continueData.filter(item => {return item.slug == slug})
+                continueData = continueData[0]
             }
         }
         if(voteComic) likes = voteComic.heart

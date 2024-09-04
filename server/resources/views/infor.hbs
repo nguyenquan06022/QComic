@@ -61,8 +61,8 @@
                         </a>
                     {{/with}}
                     {{#if continueData}}
-                        <a href="{{linkChap}}" id="continue">
-                            <button class="btn btn-warning roboto-bold" style="margin: 10px" id="continueBtn">{{chapName}}</button>
+                        <a href="{{continueData.linkChap}}" id="continue">
+                            <button class="btn btn-warning roboto-bold" style="margin: 10px" id="continueBtn">Đọc tiếp chap {{continueData.chapName}}</button>
                         </a>
                     {{/if}}
                     {{#if authenticated}}
