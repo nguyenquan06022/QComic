@@ -56,7 +56,8 @@ app.engine('hbs',engine({
         },
         timeAgo: function(dateString) {
             moment.locale('vi');
-            return moment(dateString).fromNow(); 
+            let date = new Date(dateString)
+            return moment(date).fromNow(); 
         }
     }
 }))

@@ -13,7 +13,10 @@ class userInforControllers {
                     .then(result => {
                         if(!result) res.status(500).json('Lỗi Server')
                         else {
-                            let historyComic = result.historyComic.map(item=>item.toObject())
+                            let historyComic = result.historyComic
+                            .filter(comic => comic.isDelete == false)
+                            .sort((a, b) => new Date(b.readAt).getTime() - new Date(a.readAt).getTime())
+                            .slice(0, 20).map(item => item.toObject())
                             let followComic = result.followComic.map(item=>item.toObject())
                             res.render('userinfor',{
                                 layout : 'user',
@@ -146,8 +149,8 @@ class userInforControllers {
             let id = req.user._id
             let slug = req.query.slug
             UserData.updateOne(
-                { accout_ID: id },
-                { $pull: { historyComic: { slug: slug } } } 
+                { accout_ID: id, "historyComic.slug": slug },
+                { $set: { "historyComic.$.isDelete": true } }
             ).then(() => res.end())
             .catch(next)
         }

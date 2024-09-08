@@ -25,6 +25,10 @@ const HistoryComic = new Schema({
     readAt: {
         type: String,
         required: true
+    },
+    isDelete : {
+        type : Boolean,
+        default : false
     }
 });
 
@@ -60,13 +64,6 @@ const UserData = new Schema({
     followComic: [FollowComic]
 }, {
     collection : 'UserDatas'
-});
-
-UserData.pre('save',function(next) {
-    if (this.historyComic.length > 20) {
-        this.historyComic = this.historyComic.slice(0,this.historyComic.length - 1);
-    }
-    next();
 });
 
 module.exports = mongoose.model('UserDatas',UserData)
