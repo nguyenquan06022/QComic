@@ -92,7 +92,8 @@ class mainControllers {
         let slug = req.query.slug
         let authenticated
         let voteComic = await VoteComic.findOne({slug : slug})
-        let continueComic
+        let followComic
+        let Userdata
         let like
         let likes = 0
         let continueData
@@ -106,18 +107,17 @@ class mainControllers {
             if(voteComic) {
                 like = voteComic.ListUsersReact.filter(item => {return item.userId == req.user._id})
             }
-            continueComic = await UserData.findOne({accout_ID : req.user._id})
-            if(continueComic) {
-                continueData = continueComic.historyComic.map(item=>item.toObject())
-                continueData = continueData.filter(item => {return item.slug == slug})
-                continueData = continueData[0]
+            Userdata = await UserData.findOne({accout_ID : req.user._id})
+            if(UserData) {
+                continueData = Userdata.historyComic.map(item=>item.toObject()).filter(item => {return item.slug == slug})[0]
+                followComic = Userdata.followComic.map(item => item.toObject()).filter(item => {return item.slug == slug})[0]
             }
         }
         if(voteComic) likes = voteComic.heart
         getInfor(slug)
         .then((data) => {
             let {name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt} = data
-            res.render('infor',{name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt,authenticated,slug,like,likes,continueData})
+            res.render('infor',{name,img,director,types,content,status,chapters,firstChap,lastChap,updateAt,authenticated,slug,like,likes,continueData,followComic})
         }).catch(err => {
             console.log(err)
         })

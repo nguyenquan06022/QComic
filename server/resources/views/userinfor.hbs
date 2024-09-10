@@ -142,24 +142,21 @@
                         <ul id="listFollow">
                             {{#each followComic}}
                                 <li>
-                                    <a href="">
-                                        <div class="delete-btn">
+                                    <a href="{{linkInfor}}">
+                                        <div class="delete-btn follow" data-store="{{slug}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
                                         </div>
                                         <div class="follow-item">
                                         <div class="follow-img">
-                                            <img src="https://otruyenapi.com/uploads/comics/kingdom-vuong-gia-thien-ha-thumb.jpg" alt="" width="48" height="72">
+                                            <img src="{{img}}" alt="" width="48" height="72">
                                         </div>
                                         <div class="follow-infor">
                                             <div class="follow-title roboto-bold name">
-                                            Vuong Gia Thien Ha
-                                        </div>
-                                        <div class="follow-time">
-                                            <p class="roboto-regular" style="margin-bottom:0">12 giờ trước</p>
+                                            {{comicName}}
                                         </div>
                                         </div>
                                         <div class="follow-chap">
-                                            <span class="badge badge-danger" style="padding: 10px;">Chap 32</span>
+                                            <span class="badge badge-danger" style="padding: 10px;">Chap {{lastChap}}</span>
                                         </div>
                                         </div>
                                     </a>
@@ -304,10 +301,17 @@
                 item.onclick = function(e) {
                     e.preventDefault();
                     let slug = item.getAttribute('data-store')
-                    $.ajax({
+                    if(item.classList.contains('follow')) {
+                        $.ajax({
+                        url : `/deleteFollow?slug=${slug}`,
+                        method : 'GET',
+                        })
+                    }else {
+                        $.ajax({
                         url : `/deleteHistoryComic?slug=${slug}`,
                         method : 'DELETE',
                     });
+                    }
                     let parentLi = item.closest('li')
                     parentLi.classList.add('delete')
                     setTimeout(()=>{

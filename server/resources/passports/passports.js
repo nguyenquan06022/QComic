@@ -96,7 +96,6 @@ function auth(app) {
                         let newUserData = new UserData({
                             accout_ID : savedUser._id,
                             historyComic: [],
-                            loveComic: [],
                             followComic: []
                         })
                         newUserData.save()

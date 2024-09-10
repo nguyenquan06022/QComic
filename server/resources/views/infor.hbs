@@ -86,10 +86,24 @@
                         </button>
                     </a>
                     {{/if}}
-                    <a href="#" id="follow">
+                    {{#if authenticated}}
+                        {{#if followComic}}
+                            <a href="/deleteFollow?slug={{slug}}" id="follow">
+                            <button class="btn btn-success roboto-bold" style="margin: 10px"
+                            id="flBtn">Đang theo dõi</button>
+                            </a>
+                        {{else}}
+                            <a href="/addFollow?slug={{slug}}" id="follow">
+                            <button class="btn btn-success roboto-bold" style="margin: 10px"
+                            id="flBtn">Theo dõi</button>
+                            </a>
+                        {{/if}}
+                    {{else}}
+                        <a href="/dangnhap" id="follow">
                         <button class="btn btn-success roboto-bold" style="margin: 10px"
                         id="flBtn">Theo dõi</button>
-                    </a>
+                        </a>
+                    {{/if}}
                 </div>
             </div> 
             </div>
@@ -160,25 +174,4 @@
 
         let continueA = document.querySelector('#continue')
         let continueBtn = document.querySelector('#continueBtn')
-
-        {{!-- $.ajax({
-            url : '/getHistoryComic',
-            method : 'GET',
-            success: function(response) {
-                if(response.length != 0) {
-                    response.forEach(item => {
-                        if(item.slug == new URLSearchParams(window.location.search).get('slug')) {
-                            continueA.style.display = 'block'
-                            console.log(item)
-                            continueA.href = `${item.linkChap}`
-                            continueBtn.innerText = 'Đọc tiếp chap ' + item.chapName
-                            return
-                        }
-                    })
-                }
-            },
-            error: function(error) {
-                console.log(err)
-            }
-        }); --}}
 </script>

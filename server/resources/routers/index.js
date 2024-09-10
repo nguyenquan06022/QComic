@@ -15,6 +15,8 @@ function router(app) {
     app.get('/logout',mainControllers.logOut)
     app.get('/addLikeComic',userInforControllers.addLikeComic)
     app.get('/removeLikeComic',userInforControllers.removeLikeComic)
+    app.get('/addFollow',userInforControllers.addFollow)
+    app.get('/deleteFollow',userInforControllers.deleteFollow)
     app.get('/:type',mainControllers.showList)
     app.get('/',mainControllers.renderHome)
     app.put('/updateHistoryComic',userInforControllers.updateComicHistory)

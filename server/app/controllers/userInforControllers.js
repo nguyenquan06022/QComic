@@ -1,7 +1,7 @@
 const UserModel = require('../models/UserModel')
 const UserData = require('../models/UserDatas')
 const VoteComics = require('../models/VoteComic')
-const { Error } = require('mongoose')
+
 class userInforControllers {
     showUserInfor(req,res,next) {
         if(req.isAuthenticated()) {
@@ -101,7 +101,7 @@ class userInforControllers {
                 if(!data) {
                     res.end()
                 }else {
-                    let historyComicIndex = data.historyComic.findIndex(item => item.comicName === obj.name)
+                    let historyComicIndex = data.historyComic.findIndex(item => item.slug === obj.slug)
                     if(historyComicIndex == -1) {
                         data.historyComic.unshift({
                             img : obj.img,
@@ -157,7 +157,7 @@ class userInforControllers {
     }
 
     addLikeComic(req,res,next) {
-        if(req.isAuthenticated) {
+        if(req.isAuthenticated()) {
             let slug = req.query.slug
             let id = req.user._id
             VoteComics.findOne({slug : slug})
@@ -188,7 +188,7 @@ class userInforControllers {
     }
 
     removeLikeComic(req,res,next) {
-        if(req.isAuthenticated) {
+        if(req.isAuthenticated()) {
             let slug = req.query.slug
             let id = req.user._id
             VoteComics.updateOne(
@@ -203,6 +203,59 @@ class userInforControllers {
             }).catch(err => {
                 next(err)
             })
+        }
+    }
+
+    addFollow(req,res,next) {
+        if(req.isAuthenticated()) {
+            let slug = req.query.slug
+            let id = req.user._id
+                UserData.findOne({accout_ID : id})
+                .then(async data => {
+                    if(!data) {
+                        res.end()
+                    }else {
+                        let obj = await fetch(`https://otruyenapi.com/v1/api/truyen-tranh/${slug}`)
+                        .then(response => {
+                            return response.json()
+                        }).then(data => {
+                            let name = data.data.seoOnPage.seoSchema.name
+                            let img = data.data.seoOnPage.seoSchema.image
+                            let linkInfor = `/infor?slug=${slug}`
+                            let lastChap = data.data.item.chapters[0].server_data.pop().chapter_name
+                            return {
+                                slug,name,img,linkInfor,lastChap
+                            }
+                        }).catch(err => console.log(err))
+                            data.followComic.push({
+                                slug : slug,
+                                comicName : obj.name,
+                                img : obj.img,
+                                linkInfor : obj.linkInfor,
+                                lastChap : obj.lastChap
+                            })
+                        data.save()
+                        res.redirect(`/infor?slug=${slug}`)
+                    }
+                }).catch(err => {
+                    next(err)
+                })
+            }
+    }
+
+    deleteFollow(req,res,next) {
+        if(req.isAuthenticated()) {
+            let slug = req.query.slug
+            let id = req.user._id
+            UserData.updateOne(
+                {accout_ID : id},
+                {
+                    $pull : {followComic : {'slug' : slug}}
+                }
+            ).then(() => {
+                res.redirect(`/infor?slug=${slug}`)
+            })
+            .catch(err => next(err))
         }
     }
 }

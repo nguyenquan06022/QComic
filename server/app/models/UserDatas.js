@@ -49,9 +49,9 @@ const FollowComic = new Schema({
         type: String,
         required: true
     },
-    newChapAt: {
-        type: String,
-        required: true
+    lastChap : {
+        type : String,
+        required : true
     }
 })
 

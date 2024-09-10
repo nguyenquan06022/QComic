@@ -25,9 +25,6 @@ app.use(express.json())
 app.engine('hbs',engine({
     extname : '.hbs',
     helpers: {
-        splitT: function (str) {
-            return str.split('T')[0];
-        },
         plainText: function(string) {
             let result = string.replace(/<[^>]*>?/g, '')
             result = result.replace(/\s-\s$/, '')
@@ -69,6 +66,6 @@ auth(app)
 router(app)
 
 app.listen(port, () => {
-    console.log('Listening at port: ' + port)
+    console.log('Server running!...')
 })
 
